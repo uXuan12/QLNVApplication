@@ -2,11 +2,14 @@ package com.DATN.services;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.DATN.DTO.responseDTO.AttendanceCheckOutResponseDTO;
+import com.DATN.DTO.responseDTO.AttendanceHistoryResponseDTO;
 import com.DATN.DTO.responseDTO.AttendanceResponseDTO;
 import com.DATN.entites.Account;
 import com.DATN.entites.Attendance;
@@ -29,7 +32,6 @@ public class AttendanceService {
 
     @Transactional
     public AttendanceResponseDTO checkIn(String token) {
-
         Integer accountId =
         jwtUtil.extractAccountId(token);
 
@@ -83,4 +85,89 @@ public class AttendanceService {
                 savedAttendance.getStatus()
         );
     }
+
+    @Transactional
+    public AttendanceCheckOutResponseDTO checkOut(String token) {
+        Integer accountId =
+                jwtUtil.extractAccountId(token);
+
+        Account account =
+                accountRepository.findById(accountId)
+                        .orElseThrow(() ->
+                                new ResponseStatusException(
+                                        HttpStatus.NOT_FOUND,
+                                        "Không tìm thấy tài khoản"));
+
+        Employee employee =
+                employeeRepository.findByAccount(account)
+                        .orElseThrow(() ->
+                                new ResponseStatusException(
+                                        HttpStatus.NOT_FOUND,
+                                        "Không tìm thấy nhân viên"));
+
+        Attendance attendance =
+                attendanceRepository
+                        .findByEmployeeAndDate(
+                                employee,
+                                LocalDate.now())
+                        .orElseThrow(() ->
+                                new ResponseStatusException(
+                                        HttpStatus.BAD_REQUEST,
+                                        "Bạn chưa check-in hôm nay"));
+
+        if (attendance.getCheckOut() != null) {
+
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Bạn đã check-out rồi");
+        }
+
+        attendance.setCheckOut(
+                LocalTime.now());
+
+        Attendance savedAttendance =
+                attendanceRepository.save(
+                        attendance);
+
+        return new AttendanceCheckOutResponseDTO(
+                savedAttendance.getId(),
+                savedAttendance.getDate(),
+                savedAttendance.getCheckIn(),
+                savedAttendance.getCheckOut(),
+                savedAttendance.getStatus());
+        }
+
+        // Lấy lịch sử chấm công bản thân
+        public List<AttendanceHistoryResponseDTO>
+        getMyHistory(String token) {
+
+        Integer accountId =
+                jwtUtil.extractAccountId(token);
+
+        Account account =
+                accountRepository.findById(accountId)
+                        .orElseThrow(() ->
+                                new ResponseStatusException(
+                                        HttpStatus.NOT_FOUND,
+                                        "Không tìm thấy tài khoản"));
+
+        Employee employee =
+                employeeRepository.findByAccount(account)
+                        .orElseThrow(() ->
+                                new ResponseStatusException(
+                                        HttpStatus.NOT_FOUND,
+                                        "Không tìm thấy nhân viên"));
+
+        return attendanceRepository
+                .findByEmployeeOrderByDateDesc(
+                        employee)
+                .stream()
+                .map(attendance ->
+                        new AttendanceHistoryResponseDTO(
+                                attendance.getDate(),
+                                attendance.getCheckIn(),
+                                attendance.getCheckOut(),
+                                attendance.getStatus()))
+                .toList();
+        }
 }

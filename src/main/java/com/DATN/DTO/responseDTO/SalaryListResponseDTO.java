@@ -7,26 +7,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SalaryResponseDTO {
-
+public class SalaryListResponseDTO {
     private Integer id;
 
     private Integer employeeId;
-    
+
     private String employeeName;
 
-    private Integer accountId;
     private Integer salaryMonth;
 
     private Integer salaryYear;
-
-    private Double basicSalary;
-
-    private Double allowance;
-
-    private Double bonus;
-
-    private Double deduction;
 
     private Double netSalary;
 

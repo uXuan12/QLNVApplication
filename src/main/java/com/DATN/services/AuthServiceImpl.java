@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.DATN.DTO.requestDTO.LoginRequestDTO;
 import com.DATN.DTO.responseDTO.AuthResponseDTO;
+import com.DATN.DTO.responseDTO.LogoutResponseDTO;
 import com.DATN.entites.Account;
 import com.DATN.repositories.AccountRepository;
 import com.DATN.security.util.JwtUtil;
@@ -26,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
         Account account = accountRepository
                 .findByUsername(request.getUsername())
                 .orElseThrow(() ->
-                        new RuntimeException("Sai tên đăng nhập hoặc mật khẩu"));
+                        new RuntimeException("Sai tên đăng nhập "));
 
         if (!account.getStatus().equals("ACTIVE")) {
             throw new RuntimeException("Tài khoản đã bị khóa");
@@ -36,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
                 request.getPassword(),
                 account.getPassword())) {
 
-            throw new RuntimeException("Sai tên đăng nhập hoặc mật khẩu");
+            throw new RuntimeException("Sai mật khẩu");
         }
 
         String role = account.getRole().getName();
@@ -54,5 +55,10 @@ public class AuthServiceImpl implements AuthService {
                 role,
                 token
         );
+    }
+
+    @Override
+    public LogoutResponseDTO logout() {
+        return new LogoutResponseDTO("Đăng xuất thành công");
     }
 }

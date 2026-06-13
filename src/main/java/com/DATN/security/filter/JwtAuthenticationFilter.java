@@ -36,8 +36,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
             token = authHeader.substring(7); // Cắt bỏ 7 ký tự "Bearer " để lấy đúng cái mã
             try {
                 username = jwtUtil.extractUsername(token); // Giải mã lấy username
-            } catch (Exception e) { 
-                System.out.println("Token không hợp lệ hoặc đã hết hạn!");
+            }catch (Exception e) { 
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+                response.setContentType(
+                        "application/json");
+
+                response.setCharacterEncoding(
+                        "UTF-8");
+
+                response.getWriter().write(
+                        "{\"message\":\"Token không hợp lệ hoặc đã hết hạn\"}");
+
+                return;
             }
         }
 

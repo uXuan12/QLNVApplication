@@ -1,10 +1,14 @@
 package com.DATN.controllers;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.DATN.DTO.responseDTO.SalaryListResponseDTO;
 import com.DATN.DTO.responseDTO.SalaryResponseDTO;
 import com.DATN.security.util.JwtUtil;
 import com.DATN.services.SalaryService;
@@ -38,5 +42,14 @@ public class SalaryController {
                         .getMyPayslip(accountId);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    public ResponseEntity<List<SalaryListResponseDTO>>
+                getAllSalaries() {
+
+        return ResponseEntity.ok(
+                salaryService.getAllSalaries());
     }
 }

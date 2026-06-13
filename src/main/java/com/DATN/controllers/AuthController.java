@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.DATN.DTO.requestDTO.LoginRequestDTO;
 import com.DATN.DTO.responseDTO.AuthResponseDTO;
+import com.DATN.DTO.responseDTO.LogoutResponseDTO;
 import com.DATN.services.AuthService;
 
 import jakarta.validation.Valid;
@@ -22,9 +23,14 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(
             @Valid @RequestBody LoginRequestDTO request) {
-
+        
         return ResponseEntity.ok(
                 authService.login(request)
         );
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<LogoutResponseDTO> logout() {
+        return ResponseEntity.ok(authService.logout());
     }
 }
