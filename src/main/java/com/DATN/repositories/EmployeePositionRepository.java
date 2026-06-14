@@ -1,5 +1,6 @@
 package com.DATN.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,7 @@ public interface EmployeePositionRepository extends JpaRepository<EmployeePositi
     boolean existsByPositionId(Integer positionId);
     long countByPositionIdAndIsActiveTrue(
         Integer positionId);
+    
+    List<EmployeePosition>
+    findByIsActiveTrue();
 }
