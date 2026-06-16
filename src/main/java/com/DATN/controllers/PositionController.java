@@ -27,6 +27,7 @@ public class PositionController {
     private final PositionService positionService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN','HR')")
     public List<PositionResponseDTO>
             getAllPositions() {
 
@@ -34,7 +35,7 @@ public class PositionController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<PositionResponseDTO>
     createPosition(
             @RequestBody PositionRequest request) {
@@ -46,7 +47,7 @@ public class PositionController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<PositionResponseDTO>
             updatePosition(
                     @PathVariable Integer id,
@@ -63,7 +64,7 @@ public class PositionController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<String>
             deletePosition(
                     @PathVariable Integer id) {

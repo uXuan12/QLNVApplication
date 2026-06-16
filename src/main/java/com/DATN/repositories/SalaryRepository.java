@@ -11,4 +11,9 @@ public interface SalaryRepository extends JpaRepository<Salary, Integer>{
     Optional<Salary> findTopByEmployee_IdOrderBySalaryYearDescSalaryMonthDesc(Integer employeeId);
     List<Salary>
     findAllByOrderBySalaryYearDescSalaryMonthDesc();
+
+    boolean existsByEmployee_IdAndSalaryMonthAndSalaryYear(
+        Integer employeeId,
+        Integer salaryMonth,
+        Integer salaryYear);
 }

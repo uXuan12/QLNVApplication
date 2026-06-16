@@ -32,7 +32,7 @@ public class ReportController {
     }
 
     @GetMapping("/attendance-rate")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<
             AttendanceRateResponseDTO>
             getAttendanceRate() {

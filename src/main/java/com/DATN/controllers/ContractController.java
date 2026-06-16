@@ -25,7 +25,7 @@ public class ContractController {
     private final ContractService contractService;
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<ContractResponseDTO>
             createContract(
                     @RequestBody
@@ -37,7 +37,7 @@ public class ContractController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<List<ContractResponseDTO>>
             getAllContracts() {
 
@@ -46,7 +46,7 @@ public class ContractController {
     }
 
     @PutMapping("/{id}/extend")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<ContractResponseDTO>
             extendContract(
                     @PathVariable Integer id,
@@ -60,7 +60,7 @@ public class ContractController {
     }
 
     @PutMapping("/{id}/cancel")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<String>
             cancelContract(
                     @PathVariable Integer id) {

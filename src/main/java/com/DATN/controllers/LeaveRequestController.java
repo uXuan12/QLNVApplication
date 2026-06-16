@@ -27,7 +27,6 @@ public class LeaveRequestController {
     private final LeaveRequestService leaveRequestService;
 
     @PostMapping
-    @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<LeaveRequestResponseDTO>
             createLeaveRequest(
             @RequestBody
@@ -47,7 +46,6 @@ public class LeaveRequestController {
     }
 
     @GetMapping("/my-requests")
-    @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<
             List<LeaveRequestListResponseDTO>>
             getMyRequests(
@@ -65,7 +63,6 @@ public class LeaveRequestController {
     }
 
     @PutMapping("/{id}/cancel")
-    @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<LeaveRequestResponseDTO>
             cancelRequest(
             @PathVariable Integer id,
@@ -84,7 +81,7 @@ public class LeaveRequestController {
     }
 
     @GetMapping("/pending")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<
             List<LeaveRequestResponseDTO>>
             getPendingRequests() {
@@ -95,7 +92,7 @@ public class LeaveRequestController {
     }
 
     @PutMapping("/{id}/approve")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<LeaveRequestResponseDTO>
             approveLeaveRequest(
             @PathVariable Integer id,
@@ -118,7 +115,7 @@ public class LeaveRequestController {
     }
 
     @PutMapping("/{id}/reject")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<LeaveRequestResponseDTO>
             rejectLeaveRequest(
             @PathVariable Integer id,

@@ -26,6 +26,7 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN','HR')")
     public List<DepartmentResponseDTO>
             getAllDepartments() {
 
@@ -33,7 +34,7 @@ public class DepartmentController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<DepartmentResponseDTO>
             createDepartment(
                     @RequestBody DepartmentRequestDTO request) {
@@ -46,7 +47,7 @@ public class DepartmentController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<DepartmentResponseDTO>
             updateDepartment(
                     @PathVariable Integer id,
@@ -63,7 +64,7 @@ public class DepartmentController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<String>
             deleteDepartment(
                     @PathVariable Integer id) {

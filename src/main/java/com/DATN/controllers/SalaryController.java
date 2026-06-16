@@ -5,9 +5,13 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.DATN.DTO.requestDTO.SalaryCalculationRequestDTO;
+import com.DATN.DTO.responseDTO.SalaryCalculationResponseDTO;
 import com.DATN.DTO.responseDTO.SalaryListResponseDTO;
 import com.DATN.DTO.responseDTO.SalaryResponseDTO;
 import com.DATN.security.util.JwtUtil;
@@ -51,5 +55,15 @@ public class SalaryController {
 
         return ResponseEntity.ok(
                 salaryService.getAllSalaries());
+    }
+
+    @PostMapping
+    @PreAuthorize("hasAnyRole('HR')")
+    public ResponseEntity<SalaryCalculationResponseDTO>
+        calculateSalary(@RequestBody SalaryCalculationRequestDTO request) {
+
+      return ResponseEntity.ok(
+            salaryService.calculateSalary(
+                    request));
     }
 }
