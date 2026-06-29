@@ -28,7 +28,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<List<EmployeeListResponseDTO>>
             getAllEmployees() {
 
@@ -37,7 +37,7 @@ public class EmployeeController {
     }
     
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<EmployeeResponseDTO>
             createEmployee(
             @Valid @RequestBody EmployeeRequestDTO employeeRequest) {
@@ -49,7 +49,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<EmployeeResponseDTO>
             updateEmployee(
                     @PathVariable Integer id,

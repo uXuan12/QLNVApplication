@@ -49,7 +49,7 @@ public class SalaryController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<List<SalaryListResponseDTO>>
                 getAllSalaries() {
 

@@ -13,7 +13,7 @@ public class SalaryCalculationResponseDTO {
 
     private Integer workingDays;
 
-    private Double basicSalary;
+    private Integer basicSalary;
 
     private Double allowance;
 

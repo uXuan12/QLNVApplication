@@ -22,7 +22,7 @@ public class EmployeePositionController {
     private final EmployeePositionService employeePositionService;
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<EmployeePositionResponseDTO>
             assignPosition(
                     @RequestBody
@@ -34,7 +34,7 @@ public class EmployeePositionController {
     }
 
     @PutMapping("/{employeeId}")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<EmployeePositionResponseDTO>
             changePosition(
                     @PathVariable Integer employeeId,

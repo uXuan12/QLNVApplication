@@ -21,7 +21,7 @@ public class ReportController {
     private final ReportService reportService;
 
     @GetMapping("/workforce-chart")
-    @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @PreAuthorize("hasAnyRole('HR')")
     public ResponseEntity<
             List<WorkforceChartResponseDTO>>
             getWorkforceChart() {

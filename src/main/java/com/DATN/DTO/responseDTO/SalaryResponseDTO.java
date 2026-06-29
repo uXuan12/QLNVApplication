@@ -16,11 +16,12 @@ public class SalaryResponseDTO {
     private String employeeName;
 
     private Integer accountId;
+
     private Integer salaryMonth;
 
     private Integer salaryYear;
 
-    private Double basicSalary;
+    private Integer basicSalary;
 
     private Double allowance;
 

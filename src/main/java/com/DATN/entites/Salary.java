@@ -40,7 +40,7 @@ public class Salary {
     @NotNull
     @Positive
     @Column(name = "basic_salary")
-    private Double basicSalary;
+    private Integer basicSalary;
 
     @PositiveOrZero
     private Double allowance;

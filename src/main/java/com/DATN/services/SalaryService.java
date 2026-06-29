@@ -188,7 +188,7 @@ public class SalaryService {
                             startDate,
                             endDate);
 
-    double basicSalary =
+    int basicSalary =
             contract.getSalary();
 
     double allowance =
